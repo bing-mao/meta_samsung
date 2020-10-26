@@ -9,14 +9,21 @@ SRCREV = "${AUTOREV}"
 
 #https://github.com/NexellCorp/u-boot-2016.01
 #SRC_URI = "git://github.com/SamsungARTIK/u-boot-artik;protocol=https;branch=ARTIK-SW-18.05.00"
-SRC_URI = "git://github.com/friendlyarm/u-boot.git;protocol=https;branch=nanopi2-v2016.01"
+#SRC_URI = "git://github.com/friendlyarm/u-boot.git;protocol=https;branch=nanopi2-v2016.01"
+SRC_URI = "git://github.com/bing-mao/nanopi3_u-boot_binary;protocol=https;branch=main"
 
 S = "${WORKDIR}/git"
 
-do_configure() {
-	mkdir -p ${B}/tools/nexell/nsih/
-	cp ${S}/tools/nexell/nsih/nanopi2.txt ${B}/tools/nexell/nsih/
-	cp ${S}/tools/nexell/nsih/nanopi3.txt ${B}/tools/nexell/nsih/
-
-	sed -i '/autoconf/d' ${S}/arch/arm/dts/s5p4418.dtsi
+do_deploy() {
+	install -m 0644 ${S}/u-boot-nanopi3-2016.01-r0.bin ${DEPLOYDIR}/
 }
+
+do_configure() {
+	:
+}
+
+do_install() {
+	:
+}
+
+addtask deploy before do_build after do_compile
